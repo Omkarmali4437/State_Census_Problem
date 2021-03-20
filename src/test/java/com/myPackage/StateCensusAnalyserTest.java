@@ -15,6 +15,7 @@ public class StateCensusAnalyserTest {
 
     @Test
     public void to_check_if_data_is_loaded(){
-        stateCensusAnalyser.loadData(path);
+        int size=stateCensusAnalyser.loadData(path);
+        Assert.assertEquals(29,size);
     }
 }

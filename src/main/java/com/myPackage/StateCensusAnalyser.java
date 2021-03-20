@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 public class StateCensusAnalyser {
 
-    public void loadData(String path){
+    public int loadData(String path){
         int i=0;
         try{
             Reader reader= Files.newBufferedReader(Paths.get(path));
@@ -27,9 +27,11 @@ public class StateCensusAnalyser {
                 System.out.println("PhoneNo : " + censusAnalyser.getAreaInSqKm());
                 System.out.println("Country : " + censusAnalyser.getDensityPerSqKm());
                 System.out.println("==========================");
+                i++;
             }
         }catch (Exception e){
             e.printStackTrace();
         }
+        return i;
     }
 }
