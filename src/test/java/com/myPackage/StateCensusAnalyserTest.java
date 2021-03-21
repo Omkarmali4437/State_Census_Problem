@@ -8,6 +8,7 @@ public class StateCensusAnalyserTest {
     StateCensusAnalyser stateCensusAnalyser;
     private String Correct_Path="C:\\Users\\DELL\\IdeaProjects\\IndianStateCensus\\src\\test\\resources\\IndiaStateCensusData.csv";
     private String Wrong_Path="C:\\Users\\DELL\\IdeaProjects\\IndianStateCensus\\src\\main\\resources\\IndiaStateCensusData.csv";
+    private String Wrong_file_type="C:\\Users\\DELL\\IdeaProjects\\IndianStateCensus\\src\\test\\resources\\IndiaStateCensusData.txt";
 
     @Before
     public void setup() {
@@ -25,7 +26,19 @@ public class StateCensusAnalyserTest {
         try{
             stateCensusAnalyser.loadData(Wrong_Path);
         }catch (CustomException e){
-            throw new CustomException("Wrong file path");
+            System.out.println(e.type);
+            Assert.assertEquals(CustomException.ExceptionType.Wrong_File,e.type);
         }
     }
+
+    @Test
+    public void given_wrong_file_type_should_throw_custom_exception() throws CustomException{
+        try{
+            stateCensusAnalyser.loadData(Wrong_file_type);
+        }catch (CustomException e){
+            System.out.println(e.type);
+            Assert.assertEquals(e.type,CustomException.ExceptionType.Wrong_File_Type);
+        }
+    }
+
 }
