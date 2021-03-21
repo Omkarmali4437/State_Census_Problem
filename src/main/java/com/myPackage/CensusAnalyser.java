@@ -54,8 +54,8 @@ public class CensusAnalyser {
                 CSVStateCodeAnalyser censusAnalyser=csvStateCensusAnalyserIterator.next();
                 numofEnteries++;
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
+        }catch (IOException e){
+            throw new CustomException(e.getMessage(), CustomException.ExceptionType.Wrong_File);
         }
         return numofEnteries;
     }

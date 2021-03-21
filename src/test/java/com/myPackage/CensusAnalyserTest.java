@@ -63,9 +63,19 @@ public class CensusAnalyserTest {
     }
 
     @Test
-    public void given_correct_path_shold_return_count() throws CustomException {
+    public void given_correct_path_should_return_count() throws CustomException {
         int numofEnteries = censusAnalyser.loadStateCodeData(State_Code_Correct_path);
         Assert.assertEquals(37, numofEnteries);
+    }
+
+    @Test
+    public void given_wrong_path_should_return_custom_exception() throws CustomException{
+        try{
+            censusAnalyser.loadStateCodeData(Wrong_Path);
+        }catch (CustomException e){
+            System.out.println(e.getMessage());
+            Assert.assertEquals(CustomException.ExceptionType.Wrong_File,e.type);
+        }
     }
 
 }
