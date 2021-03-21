@@ -50,15 +50,14 @@ public class CensusAnalyser {
                         .withIgnoreLeadingWhiteSpace(true)
                         .build();
 
-                Iterator<CSVStateCodeAnalyser> csvStateCensusAnalyserIterator = csvToBean.iterator();
-                while (csvStateCensusAnalyserIterator.hasNext()) {
-                    CSVStateCodeAnalyser censusAnalyser = csvStateCensusAnalyserIterator.next();
-                    numofEnteries++;
-                }
+                Iterator<CSVStateCodeAnalyser> csvStateCodeAnalyserIterator = csvToBean.iterator();
+                Iterable<CSVStateCodeAnalyser> iterator=()  -> csvStateCodeAnalyserIterator;
+                return (int) StreamSupport.stream(iterator.spliterator(), false).count();
             } catch (IOException e) {
                 throw new CustomException(e.getMessage(), CustomException.ExceptionType.Wrong_File);
+            }catch (RuntimeException e){
+                throw new CustomException(e.getMessage(), CustomException.ExceptionType.Wrong_File_Delimiter);
             }
-            return numofEnteries;
         }
         else{
             throw new CustomException("Wrong File type it should .csv", CustomException.ExceptionType.Wrong_File_Type);
