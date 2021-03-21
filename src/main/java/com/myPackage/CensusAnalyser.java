@@ -41,23 +41,28 @@ public class CensusAnalyser {
     }
 
     public int loadStateCodeData(String path) throws CustomException {
-        int numofEnteries=0;
-        try {
-            Reader reader = Files.newBufferedReader(Paths.get(path));
-            CsvToBean<CSVStateCodeAnalyser> csvToBean = new CsvToBeanBuilder(reader)
-                    .withType(CSVStateCodeAnalyser.class)
-                    .withIgnoreLeadingWhiteSpace(true)
-                    .build();
+        if(path.contains(".csv")) {
+            int numofEnteries = 0;
+            try {
+                Reader reader = Files.newBufferedReader(Paths.get(path));
+                CsvToBean<CSVStateCodeAnalyser> csvToBean = new CsvToBeanBuilder(reader)
+                        .withType(CSVStateCodeAnalyser.class)
+                        .withIgnoreLeadingWhiteSpace(true)
+                        .build();
 
-            Iterator<CSVStateCodeAnalyser> csvStateCensusAnalyserIterator = csvToBean.iterator();
-            while (csvStateCensusAnalyserIterator.hasNext()) {
-                CSVStateCodeAnalyser censusAnalyser=csvStateCensusAnalyserIterator.next();
-                numofEnteries++;
+                Iterator<CSVStateCodeAnalyser> csvStateCensusAnalyserIterator = csvToBean.iterator();
+                while (csvStateCensusAnalyserIterator.hasNext()) {
+                    CSVStateCodeAnalyser censusAnalyser = csvStateCensusAnalyserIterator.next();
+                    numofEnteries++;
+                }
+            } catch (IOException e) {
+                throw new CustomException(e.getMessage(), CustomException.ExceptionType.Wrong_File);
             }
-        }catch (IOException e){
-            throw new CustomException(e.getMessage(), CustomException.ExceptionType.Wrong_File);
+            return numofEnteries;
         }
-        return numofEnteries;
+        else{
+            throw new CustomException("Wrong File type it should .csv", CustomException.ExceptionType.Wrong_File_Type);
+        }
     }
 
 }

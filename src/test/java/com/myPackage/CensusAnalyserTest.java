@@ -78,4 +78,14 @@ public class CensusAnalyserTest {
         }
     }
 
+    @Test
+    public void given_wrong_file_type_throw_custom_exception() throws CustomException{
+        try{
+            censusAnalyser.loadStateCodeData(Wrong_file_type);
+        }catch (CustomException e){
+            System.out.println(e.getMessage());
+            Assert.assertEquals(e.type,CustomException.ExceptionType.Wrong_File_Type);
+        }
+    }
+
 }
